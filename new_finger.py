@@ -24,13 +24,22 @@ def on_button_click(event, x, y, flags, param):
         if button_x <= x <= button_x + button_width and button_y <= y <= button_y + button_height:
             button_clicked = True
 
+def result(user, robot):
+    print("<<<<<<<<<<<<<<<  Result Time  >>>>>>>>>>>>>>>")
+    print(f"User => {user_choice} v/s Robot => {robot_choice}")
+    if user == robot:
+        print("It's a tie!")
+    elif (user == "Rock" and robot == 2) or (user == "Paper" and robot == 1) or (user == "Scissor" and robot == 3):
+        print("You win!")
+    else:
+        print("You lose!")
 
-def start():
-    for i in range(3):
-        print(3 - i)
-        time.sleep(2)
-    print("GO")
-    hand_make_gesture()
+# def start():
+#     for i in range(3):
+#         print(3 - i)
+#         time.sleep(2)
+#     print("GO")
+#     hand_make_gesture()
 
 
 def hand_make_gesture():
@@ -38,7 +47,8 @@ def hand_make_gesture():
 
     print("<<<<<<<<<<<<<<<  Robot's turn  >>>>>>>>>>>>>>>")
     hand_gesture = np.random.randint(1, 4)
-    print("Robot's gesture:", hand_gesture)
+    print("Robot's gesture: ", hand_gesture)
+    robot_choice = hand_gesture
     ser.write(str(hand_gesture).encode())
     time.sleep(2)
     ser.close()
@@ -71,6 +81,7 @@ def human_gesture():
                 user_choice = "Scissor"
                 print("User gesture: ", user_choice)
                 hand_make_gesture()
+                result(user_choice, robot_choice)
                 # break
 
             if fingers == [1, 1, 1, 1, 1]:
